@@ -1,7 +1,7 @@
 # Gemini Ai KMP
 
 # Screenshots
-<img src="https://github.com/KhubaibKhan4/Gemini-AI-KMP/blob/master/screenshots/1.png" width="200px" hieght="400px" /> <img src="https://github.com/KhubaibKhan4/Gemini-AI-KMP/blob/master/screenshots/2.png" width="200px" hieght="400px" />
+<img src="https://github.com/KhubaibKhan4/Gemini-AI-KMP/blob/master/screenshots/1.png" width="400px" hieght="800px" /> <img src="https://github.com/KhubaibKhan4/Gemini-AI-KMP/blob/master/screenshots/2.png" width="400px" hieght="800px" />
 <img src="https://github.com/KhubaibKhan4/Gemini-AI-KMP/blob/master/screenshots/3.png" /> <img src="https://github.com/KhubaibKhan4/Gemini-AI-KMP/blob/master/screenshots/4.png" />
 <img src="https://github.com/KhubaibKhan4/Gemini-AI-KMP/blob/master/screenshots/5.png" /> <img src="https://github.com/KhubaibKhan4/Gemini-AI-KMP/blob/master/screenshots/6.png" />
 
