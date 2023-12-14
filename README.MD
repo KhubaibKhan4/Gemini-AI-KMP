@@ -1,4 +1,10 @@
-# Compose Multiplatform Application
+# Gemini Ai KMP
+
+# Screenshots
+<img src="https://github.com/KhubaibKhan4/Gemini-AI-KMP/blob/master/screenshots/1.png" width="400px" hieght="800px" /> <img src="https://github.com/KhubaibKhan4/Gemini-AI-KMP/blob/master/screenshots/2.png" width="400px" hieght="800px" />
+<img src="https://github.com/KhubaibKhan4/Gemini-AI-KMP/blob/master/screenshots/3.png" /> <img src="https://github.com/KhubaibKhan4/Gemini-AI-KMP/blob/master/screenshots/4.png" />
+<img src="https://github.com/KhubaibKhan4/Gemini-AI-KMP/blob/master/screenshots/5.png" /> <img src="https://github.com/KhubaibKhan4/Gemini-AI-KMP/blob/master/screenshots/6.png" />
+
 
 ## Before running!
  - check your system with [KDoctor](https://github.com/Kotlin/kdoctor)
