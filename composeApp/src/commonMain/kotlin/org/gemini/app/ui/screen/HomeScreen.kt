@@ -5,22 +5,28 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Computer
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -31,6 +37,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import kotlinx.coroutines.launch
@@ -48,7 +55,7 @@ class HomeScreen : Screen {
         val coroutineScope = rememberCoroutineScope()
         var content by remember { mutableStateOf("hey") }
         var search by remember { mutableStateOf("") }
-        var chatMessages by remember { mutableStateOf(listOf<String>()) }
+        var chatMessages by remember { mutableStateOf(listOf<Pair<String, String>>()) }
         var isEnable by remember { mutableStateOf(false) }
 
         LaunchedEffect(Unit) {
@@ -73,7 +80,7 @@ class HomeScreen : Screen {
                         data.candidates?.firstOrNull()?.content?.parts?.firstOrNull()?.text.orEmpty()
 
                     if (role.isNotEmpty() && text.isNotEmpty()) {
-                        chatMessages = chatMessages + "$role: $text"
+                        chatMessages = chatMessages + Pair(role, "$role: $text")
                     }
                 }
                 println("API Response $data")
@@ -89,7 +96,7 @@ class HomeScreen : Screen {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp),
+                .padding(6.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Bottom
         ) {
@@ -101,9 +108,15 @@ class HomeScreen : Screen {
                 contentPadding = PaddingValues(8.dp),
                 state = rememberLazyListState()
             ) {
+                // Inside LazyColumn
                 items(chatMessages) { chatMessage ->
-                    ChatMessage(message = chatMessage)
+                    ChatMessage(
+                        message = chatMessage.second,
+                        role = chatMessage.first,
+                        userRole = chatMessage.second
+                    )
                 }
+
             }
 
             // Input field and send button
@@ -126,7 +139,7 @@ class HomeScreen : Screen {
                             modifier = Modifier.fillMaxWidth(),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            OutlinedTextField(
+                            TextField(
                                 value = search,
                                 onValueChange = {
                                     search = it
@@ -151,7 +164,11 @@ class HomeScreen : Screen {
                                             contentDescription = null
                                         )
                                     }
-                                }
+                                },
+                                colors = TextFieldDefaults.colors(
+                                    unfocusedIndicatorColor = Color.Unspecified,
+                                    focusedIndicatorColor = Color.Unspecified
+                                )
                             )
                         }
                     }
@@ -162,15 +179,42 @@ class HomeScreen : Screen {
 }
 
 @Composable
-fun ChatMessage(message: String) {
+fun ChatMessage(message: String, role: String, userRole: String) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp),
-        horizontalArrangement = Arrangement.Start
+        verticalAlignment = Alignment.CenterVertically
     ) {
         SelectionContainer {
-            Text(message)
+            // Display the icon based on the role
+            val icon = when {
+                role.equals("model", ignoreCase = true) -> Icons.Default.Computer
+                role.equals(
+                    userRole,
+                    ignoreCase = true
+                ) -> Icons.Default.Person // Display user's role
+                else -> Icons.Default.Person // Default to a person icon for other roles
+            }
+
+            // Display the role icon
+            Icon(
+                imageVector = icon,
+                contentDescription = null,
+                modifier = Modifier.padding(end = 8.dp)
+            )
+
+            // Use Spacer to create space between icon and text
+            Spacer(modifier = Modifier.width(4.dp))
+
+            // Display the message text
+            if (role.equals(userRole, ignoreCase = true)) {
+                // Different style for user's message
+                Text(message, modifier = Modifier.padding(start = 30.dp))
+            } else {
+                // Style for other messages
+                Text(message, modifier = Modifier.padding(start = 30.dp))
+            }
         }
     }
 }
